@@ -12,7 +12,6 @@ const Page = async () => {
     <div className="min-h-screen min-w-screen flex items-center justify-center">
       {data && (
         <>
-          {JSON.stringify(data)}
           <LogoutButton />
         </>
       )}
