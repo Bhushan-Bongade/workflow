@@ -26,7 +26,7 @@ import {
 import { title } from "process";
 import { group } from "console";
 import { authClient } from "@/lib/auth-client";
-import { useHasActiveSubscription } from "@/app/features/auth/components/use-subscription";
+import { useHasActiveSubscription } from "@/features/auth/components/use-subscription";
 
 const menuItems = [
   {
@@ -61,7 +61,7 @@ export const AppSidebar = () => {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton className="gap-x-4 h-10  px-4">
+            <SidebarMenuButton className="gap-x-4 h-10 px-4">
               <Link href={"/workflows"} prefetch>
                 <Image
                   alt="workflow"
@@ -69,8 +69,8 @@ export const AppSidebar = () => {
                   width={20}
                   height={20}
                 />
-                <span className="font-semibold">Workflow</span>
               </Link>
+              <span className="font-semibold">Workflow</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
