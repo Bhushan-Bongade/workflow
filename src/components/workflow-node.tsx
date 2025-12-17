@@ -26,7 +26,7 @@ export function WorkflowNode({
     <>
       {showToolbar && (
         <NodeToolbar>
-          <Button size="sm" variant="ghost" onClick={onDeleted}>
+          <Button size="sm" variant="ghost" onClick={onSettings}>
             <SettingsIcon className="size-4" />
           </Button>
           <Button size="sm" variant="ghost" onClick={onDeleted}>
