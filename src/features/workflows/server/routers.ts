@@ -9,8 +9,27 @@ import {
 } from "@/trpc/init";
 import { generateSlug } from "random-word-slugs";
 import z from "zod";
+import { inngest } from "@/inngest/client";
 
 export const workflowsRouter = createTRPCRouter({
+  execute: premiumProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const workflow = await prisma.workflow.findFirstOrThrow({
+        where: {
+          id: input.id,
+          userId: ctx.auth.user.id,
+        },
+      });
+
+      await inngest.send({
+        name: "workflow/execute.workflow",
+        data: { workflowId: input.id },
+      });
+
+      return workflow;
+    }),
+
   create: premiumProcedure.mutation(async ({ ctx }) => {
     return await prisma.workflow.create({
       data: {
