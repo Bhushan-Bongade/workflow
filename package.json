@@ -10,6 +10,7 @@
   "dependencies": {
     "@ai-sdk/google": "^2.0.44",
     "@hookform/resolvers": "^5.2.2",
+    "@inngest/realtime": "^0.4.5",
     "@paralleldrive/cuid2": "^3.0.4",
     "@polar-sh/better-auth": "^1.5.0",
     "@polar-sh/sdk": "^0.41.5",
@@ -55,6 +56,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "handlebars": "^4.7.8",
     "inngest": "^3.46.0",
     "input-otp": "^1.4.2",
     "jotai": "^2.16.0",
