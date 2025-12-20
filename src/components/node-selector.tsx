@@ -31,15 +31,20 @@ const triggerNodes: NodeTypeOption[] = [
       "Runs the flow on clicking the button. Good for getting started quickly",
     icon: MousePointerIcon,
   },
+  {
+    type: NodeType.GOOGLE_FORM_TRIGGER,
+    label: "Trigger on Google Form Submission",
+    description: "Runs the flow when a Google Form is submitted",
+    icon: "/logos/google-forms.svg",
+  },
 ];
 
 const executionNodes: NodeTypeOption[] = [
   {
     type: NodeType.HTTP_REQUEST,
-    label: "Triggers on HTTP_REQUEST",
-    description:
-      "Runs the flow on clicking the button. Good for getting started quickly",
-    icon: MousePointerIcon,
+    label: "HTTP Request",
+    description: "Make an HTTP request to a URL",
+    icon: GlobeIcon,
   },
 ];
 
