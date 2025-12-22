@@ -37,6 +37,12 @@ const triggerNodes: NodeTypeOption[] = [
     description: "Runs the flow when a Google Form is submitted",
     icon: "/logos/google-forms.svg",
   },
+  {
+    type: NodeType.STRIPE_TRIGGER,
+    label: "Trigger on Stripe Payment",
+    description: "Runs the flow when a Stripe payment is made",
+    icon: "/logos/stripe.svg",
+  },
 ];
 
 const executionNodes: NodeTypeOption[] = [
@@ -45,6 +51,12 @@ const executionNodes: NodeTypeOption[] = [
     label: "HTTP Request",
     description: "Make an HTTP request to a URL",
     icon: GlobeIcon,
+  },
+  {
+    type: NodeType.GEMINI,
+    label: "Gemini AI",
+    description: "Use Google's Gemini AI to generate text",
+    icon: "/logos/gemini.svg",
   },
 ];
 

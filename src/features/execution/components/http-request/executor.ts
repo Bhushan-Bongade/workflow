@@ -11,9 +11,9 @@ Handlebars.registerHelper("json", (context) => {
 });
 
 type HTTPRequestData = {
-  variableName: string;
-  endpoint: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  variableName?: string;
+  endpoint?: string;
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   body?: string;
 };
 
@@ -27,38 +27,40 @@ export const httpRequestTriggerExecutor: NodeExecutor<
     })
   );
 
-  if (!data.endpoint) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error",
-      })
-    );
-    throw new NonRetriableError("HTTP Request node: No endpoint configured");
-  }
-
-  if (!data.variableName) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error",
-      })
-    );
-    throw new NonRetriableError("Variable name not configured");
-  }
-
-  if (!data.method) {
-    await publish(
-      httpRequestChannel().status({
-        nodeId,
-        status: "error",
-      })
-    );
-    throw new NonRetriableError("Method is not configured");
-  }
-
   try {
     const result = await step.run("http-trigger", async () => {
+      if (!data.endpoint) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error",
+          })
+        );
+        throw new NonRetriableError(
+          "HTTP Request node: No endpoint configured"
+        );
+      }
+
+      if (!data.variableName) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error",
+          })
+        );
+        throw new NonRetriableError("Variable name not configured");
+      }
+
+      if (!data.method) {
+        await publish(
+          httpRequestChannel().status({
+            nodeId,
+            status: "error",
+          })
+        );
+        throw new NonRetriableError("Method is not configured");
+      }
+
       const method = data.method;
       const endpoint = Handlebars.compile(data.endpoint || {})(context);
 
@@ -99,6 +101,7 @@ export const httpRequestTriggerExecutor: NodeExecutor<
         [data.variableName]: responsePayload,
       };
     });
+
     return result;
   } catch (error) {
     await publish(
