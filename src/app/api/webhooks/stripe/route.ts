@@ -14,36 +14,29 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const body = await req.json();
 
-    const formData = {
-      formId: body.formId,
-      formTitle: body.formTitle,
-      responseId: body.responseId,
-      timeStamp: body.timeStamp,
-      respondentEmail: body.respondentEmail,
-      responses: body.responses,
-      raw: body,
+    const stripeData = {
+      eventId: body.id,
+      eventType: body.type,
+      timestamp: body.timestamp,
+      raw: body.data?.object,
     };
 
     await sendWorkflowExecution({
       workflowId,
       initialData: {
-        googleForm: formData,
+        stripe: stripeData,
       },
     });
 
     return NextResponse.json(
-      { message: "Google Form webhook processed successfully", success: true },
+      { message: "Stripe webhook processed successfully", success: true },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Google Form webhook error:", error);
+    console.error("Stripe webhook error:", error);
     return NextResponse.json(
-      { error: "Failed to process Google form submission", success: false },
+      { error: "Failed to process Stripe webhook ", success: false },
       { status: 500 }
     );
   }
-
-  return NextResponse.json({
-    message: "Google Form Trigger received a POST request.",
-  });
 }
