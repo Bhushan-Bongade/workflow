@@ -2,8 +2,10 @@ import Handlebars from "handlebars";
 import type { NodeExecutor } from "@/features/execution/types";
 import { NonRetriableError } from "inngest";
 import { generateText } from "ai";
-import { google } from "@ai-sdk/google";
+import { createGoogleGenerativeAI, google } from "@ai-sdk/google";
 import { geminiChannel } from "@/inngest/channels/gemini";
+import { useSuspenseCredential } from "@/features/credentials/hooks/use-credentials";
+import prisma from "@/lib/db";
 
 Handlebars.registerHelper("json", (context) => {
   const jsonString = JSON.stringify(context, null, 2);
@@ -13,6 +15,7 @@ Handlebars.registerHelper("json", (context) => {
 
 type GeminiData = {
   variableName?: string;
+  credentialId?: string;
   model?: string;
   systemPrompt?: string;
   userPrompt?: string;
@@ -21,6 +24,7 @@ type GeminiData = {
 export const geminiExecutor: NodeExecutor<GeminiData> = async ({
   data,
   nodeId,
+  userId,
   context,
   step,
   publish,
@@ -33,6 +37,16 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
   );
 
   if (!data.variableName) {
+    await publish(
+      geminiChannel().status({
+        nodeId,
+        status: "error",
+      })
+    );
+    throw new NonRetriableError("Gemini variable name is missing");
+  }
+
+  if (!data.credentialId) {
     await publish(
       geminiChannel().status({
         nodeId,
@@ -57,6 +71,20 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
     : "You are a helpful assistant.";
 
   const userPrompt = Handlebars.compile(data.userPrompt)(context);
+
+  const credential = await step.run("get-credential", async () => {
+    return prisma.credential.findUniqueOrThrow({
+      where: { id: data.credentialId, userId },
+    });
+  });
+
+  if (!credential) {
+    throw new NonRetriableError("Gemini credential is missing");
+  }
+
+  const google = createGoogleGenerativeAI({
+    apiKey: credential.value,
+  });
 
   try {
     const { steps } = await step.ai.wrap("gemini-generate-text", generateText, {

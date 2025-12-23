@@ -2,7 +2,6 @@
 
 import {
   AlertTriangleIcon,
-  Divide,
   Loader2Icon,
   MoreVerticalIcon,
   PackageOpenIcon,
@@ -74,12 +73,12 @@ export const EntityHeader = ({
         </Button>
       )}
       {newButtonHref && !onNew && (
-        <Button size={"sm"} asChild>
-          <Link href={newButtonHref} prefetch>
+        <Link href={newButtonHref} prefetch>
+          <Button size={"sm"}>
             <PlusIcon className="size-4" />
-          </Link>
-          {newButtonLabel}
-        </Button>
+            {newButtonLabel}
+          </Button>
+        </Link>
       )}
     </div>
   );
