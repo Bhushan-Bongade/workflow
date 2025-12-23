@@ -11,6 +11,7 @@ import { manualTriggerChannel } from "./channels/manual-trigger";
 import { googleFormTriggerChannel } from "./channels/google-form-trigger";
 import { stripeTriggerChannel } from "./channels/stripe-trigger";
 import { geminiChannel } from "./channels/gemini";
+import { discordChannel } from "./channels/discord";
 
 const google = createGoogleGenerativeAI();
 
@@ -24,6 +25,7 @@ export const executeWorkflow = inngest.createFunction(
       googleFormTriggerChannel(),
       stripeTriggerChannel(),
       geminiChannel(),
+      discordChannel(),
     ],
   },
   async ({ event, step, publish }) => {
