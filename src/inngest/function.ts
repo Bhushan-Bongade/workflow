@@ -47,6 +47,16 @@ export const executeWorkflow = inngest.createFunction(
       return topologicalSort(workflow.nodes, workflow.connections);
     });
 
+    const userId = await step.run("find-userId", async () => {
+      const workflow = await prisma.workflow.findFirstOrThrow({
+        select: {
+          userId: true,
+        },
+      });
+
+      return workflow.userId;
+    });
+
     let context = event.data.initialData || {};
 
     for (const node of sortedNodes) {
@@ -54,6 +64,7 @@ export const executeWorkflow = inngest.createFunction(
       context = await executor({
         data: node.data as Record<string, unknown>,
         nodeId: node.id,
+        userId,
         context,
         step,
         publish,
