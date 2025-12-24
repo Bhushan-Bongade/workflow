@@ -51,6 +51,38 @@ export function RegisterForm() {
     },
   });
 
+  const SignInGithub = async () => {
+    await authClient.signIn.social(
+      {
+        provider: "github",
+      },
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: () => {
+          toast.error("Something went wrong");
+        },
+      }
+    );
+  };
+
+  const SignInGoogle = async () => {
+    await authClient.signIn.social(
+      {
+        provider: "google",
+      },
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: () => {
+          toast.error("Something went wrong");
+        },
+      }
+    );
+  };
+
   const onSubmit = async (values: RegisterFormValues) => {
     await authClient.signUp.email(
       {
@@ -89,6 +121,7 @@ export function RegisterForm() {
                     className="w-full cursor-pointer"
                     type="button"
                     disabled={isPending}
+                    onClick={SignInGithub}
                   >
                     <Image
                       alt="github"
@@ -103,6 +136,7 @@ export function RegisterForm() {
                     className="w-full cursor-pointer"
                     type="button"
                     disabled={isPending}
+                    onClick={SignInGoogle}
                   >
                     <Image
                       alt="google"
