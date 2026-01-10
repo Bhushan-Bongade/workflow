@@ -10,7 +10,7 @@ const Layout = ({
 }>) => {
   return (
     <div className="bg-muted flex min-h-dvh min-w-dvw flex-col justify-center items-center gap-6 p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col items-center justify-center gap-6">
+      <div className="flex w-full max-w-sm flex-col justify-center gap-6">
         <Link href={"/"} className="flex justify-center">
           <Image
             alt="Workflow"
