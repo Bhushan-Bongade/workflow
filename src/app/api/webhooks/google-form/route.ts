@@ -1,7 +1,7 @@
 import { sendWorkflowExecution } from "@/inngest/utils";
 import { type NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const workflowId = url.searchParams.get("workflowId");
@@ -42,8 +42,4 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { status: 500 }
     );
   }
-
-  return NextResponse.json({
-    message: "Google Form Trigger received a POST request.",
-  });
 }
