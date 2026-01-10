@@ -39,6 +39,7 @@ export function useNodeStatus({
       .sort((a, b) => {
         if (a.kind === "data" || b.kind === "data") {
           return (
+            // @ts-ignore
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
         }
