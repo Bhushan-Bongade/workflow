@@ -66,11 +66,10 @@ export const AppSidebar = () => {
                 <Image
                   alt="workflow"
                   src={"/logos/logo.svg"}
-                  width={20}
+                  width={100}
                   height={20}
                 />
               </Link>
-              <span className="font-semibold">Workflow</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

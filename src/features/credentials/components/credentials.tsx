@@ -77,7 +77,7 @@ export const CredentialsHeader = () => {
         title="Credentials"
         description="Create and manage your credentials"
         newButtonHref="/credentials/new"
-        newButtonLabel="New credential"
+        newButtonLabel="New"
       />
     </>
   );

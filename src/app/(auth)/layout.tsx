@@ -14,7 +14,7 @@ const Layout = ({
         <Link href={"/"} className="flex justify-center">
           <Image
             alt="Workflow"
-            width={50}
+            width={100}
             height={50}
             src={"/logos/logo.svg"}
           />

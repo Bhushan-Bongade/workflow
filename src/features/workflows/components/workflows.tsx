@@ -83,7 +83,7 @@ export const WorkflowsHeader = ({ disabled }: { disabled?: boolean }) => {
         title="Workflows"
         description="Create and manage your workflows"
         onNew={handleCreate}
-        newButtonLabel="New workflow"
+        newButtonLabel="Create"
         disabled={createWorkflow.isPending}
         isCreating={disabled}
       />
